@@ -1,0 +1,51 @@
+name: Scrape de datos más recientes
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron:  '*/10 * * * *'
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+    - name: Get data
+      run: |-
+        curl --location --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
+        --header 'Connection: keep-alive' \
+        --header 'Pragma: no-cache' \
+        --header 'Cache-Control: no-cache' \
+        --header 'accept: application/json, text/plain, */*' \
+        --header 'DNT: 1' \
+        --header 'x-grafana-org-id: 1' \
+        --header 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36' \
+        --header 'content-type: application/json' \
+        --header 'Origin: https://coronavirus.msal.gov.ar' \
+        --header 'Sec-Fetch-Site: same-origin' \
+        --header 'Sec-Fetch-Mode: cors' \
+        --header 'Sec-Fetch-Dest: empty' \
+        --header 'Referer: https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/d/8wdHBOsMk/seguimiento-vacunacion-covid?orgId=1&refresh=15m%3F' \
+        --header 'Accept-Language: en-US,en;q=0.9,es;q=0.8,pt;q=0.7,lb;q=0.6' \
+        --header 'Cookie: 4e25aec3c58a3dcb4924d0e3fe7d3d20=7211d28221969ddbc73169f9ee6e50cb' \
+        --data-raw '{
+            "targets": [
+                {
+                    "data": null,
+                    "target": "distribucion_aplicacion_utilidad_provincia_tabla",
+                    "refId": "A",
+                    "hide": false,
+                    "type": "table"
+                }
+            ]
+        }' | jq . > vaccines.json
+    - name: Commit & push if changed
+      run: |-
+        git config user.name "Automatic"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "Data from: ${timestamp}" || exit 0
+        git push
