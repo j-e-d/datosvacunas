@@ -41,6 +41,7 @@ jobs:
                 }
             ]
         }' | jq . > vacunas.json
+        jq -r "[.[0].columns[].text], .[0].rows[] | @csv" vacunas.json > vacunas.csv
     - name: Commit & push if changed
       run: |-
         git config user.name "Automatic"
