@@ -1,0 +1,138 @@
+24 rows changed
+
+  Provincia: Buenos Aires
+    Aplicadas 1°: "203252" => "212262"
+    Aplicadas 2°: "113674" => "113801"
+    Aplicadas total: "316926" => "326063"
+    % Notificación: "47.31616" => "48.680286"
+
+  Provincia: CABA
+    Aplicadas 1°: "72697" => "78876"
+    Aplicadas 2°: "25671" => "25673"
+    Aplicadas total: "98368" => "104549"
+    % Notificación: "52.48393" => "55.78178"
+
+  Provincia: Catamarca
+    Aplicadas 1°: "7145" => "7186"
+    Aplicadas 2°: "3116" => "3130"
+    Aplicadas total: "10261" => "10316"
+    % Notificación: "60.447716" => "60.771725"
+
+  Provincia: Chaco
+    Aplicadas 1°: "17616" => "17788"
+    Aplicadas total: "25373" => "25545"
+    % Notificación: "62.036674" => "62.457214"
+
+  Provincia: Chubut
+    Aplicadas 1°: "7694" => "7719"
+    Aplicadas total: "10771" => "10796"
+    % Notificación: "50.794624" => "50.91252"
+
+  Provincia: Corrientes
+    Aplicadas 1°: "14299" => "14680"
+    Aplicadas 2°: "7169" => "7258"
+    Aplicadas total: "21468" => "21938"
+    % Notificación: "57.55496" => "58.815014"
+
+  Provincia: Córdoba
+    Aplicadas 1°: "63386" => "71181"
+    Aplicadas 2°: "22225" => "22918"
+    Aplicadas total: "85611" => "94099"
+    % Notificación: "67.463356" => "74.15209"
+
+  Provincia: Entre Ríos
+    Aplicadas 1°: "19584" => "19947"
+    Aplicadas 2°: "9525" => "9569"
+    Aplicadas total: "29109" => "29516"
+    % Notificación: "57.527668" => "58.332016"
+
+  Provincia: Formosa
+    Aplicadas 1°: "6711" => "7730"
+    Aplicadas total: "9895" => "10914"
+    % Notificación: "49.475" => "54.57"
+
+  Provincia: Jujuy
+    Aplicadas 1°: "14308" => "14507"
+    Aplicadas total: "19211" => "19410"
+    % Notificación: "66.24483" => "66.93104"
+
+  Provincia: La Pampa
+    Aplicadas 1°: "9798" => "9811"
+    Aplicadas 2°: "3253" => "3286"
+    Aplicadas total: "13051" => "13097"
+    % Notificación: "90.0069" => "90.324135"
+
+  Provincia: La Rioja
+    Aplicadas 1°: "9284" => "9478"
+    Aplicadas 2°: "3209" => "3255"
+    Aplicadas total: "12493" => "12733"
+    % Notificación: "78.57233" => "80.081764"
+
+  Provincia: Mendoza
+    Aplicadas 1°: "17348" => "17414"
+    Aplicadas 2°: "10420" => "10424"
+    Aplicadas total: "27768" => "27838"
+    % Notificación: "39.05485" => "39.153305"
+
+  Provincia: Misiones
+    Aplicadas 1°: "16761" => "17595"
+    Aplicadas 2°: "5111" => "5112"
+    Aplicadas total: "21872" => "22707"
+    % Notificación: "60.92479" => "63.250698"
+
+  Provincia: Río Negro
+    Aplicadas 1°: "17661" => "17822"
+    Aplicadas 2°: "5604" => "5681"
+    Aplicadas total: "23265" => "23503"
+    % Notificación: "85.84871" => "86.72694"
+
+  Provincia: Salta
+    Aplicadas 1°: "30814" => "31122"
+    Aplicadas 2°: "8965" => "8972"
+    Aplicadas total: "39779" => "40094"
+    % Notificación: "83.74526" => "84.408424"
+
+  Provincia: San Juan
+    Aplicadas 1°: "11414" => "11427"
+    Aplicadas total: "15849" => "15862"
+    % Notificación: "54.651726" => "54.696552"
+
+  Provincia: San Luis
+    Aplicadas 1°: "9998" => "12214"
+    Aplicadas 2°: "3055" => "3384"
+    Aplicadas total: "13053" => "15598"
+    % Notificación: "63.673172" => "76.08781"
+
+  Provincia: Santa Cruz
+    Aplicadas 1°: "8467" => "8489"
+    Aplicadas 2°: "2448" => "2454"
+    Aplicadas total: "10915" => "10943"
+    % Notificación: "75.27586" => "75.46896"
+
+  Provincia: Santa Fe
+    Aplicadas 1°: "54103" => "56968"
+    Aplicadas 2°: "21562" => "21776"
+    Aplicadas total: "75665" => "78744"
+    % Notificación: "56.00666" => "58.285713"
+
+  Provincia: Santiago del Estero
+    Aplicadas 1°: "9549" => "9612"
+    Aplicadas total: "14821" => "14884"
+    % Notificación: "46.315624" => "46.5125"
+
+  Provincia: Tierra del Fuego
+    Aplicadas 1°: "3061" => "3070"
+    Aplicadas total: "4725" => "4734"
+    % Notificación: "68.478264" => "68.608696"
+
+  Provincia: Tucumán
+    Aplicadas 1°: "20408" => "20659"
+    Aplicadas 2°: "9852" => "9873"
+    Aplicadas total: "30260" => "30532"
+    % Notificación: "50.34942" => "50.802"
+
+  Provincia: Totales
+    Aplicadas 1°: "662271" => "694470"
+    Aplicadas 2°: "288718" => "290425"
+    Aplicadas total: "950989" => "984895"
+    % Notificación: "54.704525" => "56.654934"
