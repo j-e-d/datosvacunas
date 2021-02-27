@@ -12,8 +12,24 @@ jobs:
     steps:
     - name: Check out repo
       uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+    - uses: actions/cache@v2
+      name: Configure pip caching
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
     - name: Get data
       run: |-
+        cp vacunas.csv vacunas-old.csv
         curl --location --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
         --header 'Connection: keep-alive' \
         --header 'Pragma: no-cache' \
@@ -42,11 +58,11 @@ jobs:
             ]
         }' | jq . > vacunas.json
         jq -r "[.[0].columns[].text], .[0].rows[] | @csv" vacunas.json > vacunas.csv
+        csv-diff --key=Provincia vacunas-old.csv vacunas.csv > message.txt
     - name: Commit & push if changed
       run: |-
         git config user.name "Automatic"
         git config user.email "actions@users.noreply.github.com"
         git add -A
-        timestamp=$(date -u)
-        git commit -m "Data from: ${timestamp}" || exit 0
+        git commit -F message.txt || exit 0
         git push
