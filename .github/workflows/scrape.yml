@@ -62,7 +62,7 @@ jobs:
     - name: Get data portal
       run: |-
         cp Covid19VacunasAgrupadas.csv Covid19VacunasAgrupadas-old.csv
-        wget https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv
+        wget -r https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv
         csv-diff --key=jurisdiccion_nombre Covid19VacunasAgrupadas-old.csv Covid19VacunasAgrupadas.csv >> message.txt
     - name: Commit & push if changed
       run: |-
