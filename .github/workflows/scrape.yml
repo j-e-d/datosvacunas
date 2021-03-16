@@ -59,6 +59,36 @@ jobs:
         }' | jq . > vacunas.json
         jq -r "[.[0].columns[].text], .[0].rows[] | @csv" vacunas.json > vacunas.csv
         csv-diff --key=Provincia vacunas-old.csv vacunas.csv > message_1.txt
+    - name: Get dashboard timestamp
+      run: |-
+        curl --location --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
+        --header 'Connection: keep-alive' \
+        --header 'sec-ch-ua: "Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"' \
+        --header 'accept: application/json, text/plain, */*' \
+        --header 'x-grafana-org-id: 1' \
+        --header 'sec-ch-ua-mobile: ?0' \
+        --header 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36' \
+        --header 'content-type: application/json' \
+        --header 'Origin: https://coronavirus.msal.gov.ar' \
+        --header 'Sec-Fetch-Site: same-origin' \
+        --header 'Sec-Fetch-Mode: cors' \
+        --header 'Sec-Fetch-Dest: empty' \
+        --header 'Referer: https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/d/8wdHBOsMk/seguimiento-vacunacion-covid?orgId=1&refresh=15m%3F' \
+        --header 'Accept-Language: en-US,en;q=0.9,es;q=0.8,pt;q=0.7' \
+        --header 'Cookie: 4e25aec3c58a3dcb4924d0e3fe7d3d20=5b3781120cbfcdc4b1eea2b7ff592bd5' \
+        --data-raw '{
+            "targets": [
+                {
+                    "data":null,
+                    "target":"ultima_actualizacion",
+                    "refId":"A",
+                    "hide":false,
+                    "type":"timeseries"
+                }
+            ]
+        }' | jq -r ".[0].datapoints[][0] | tostring | .[0:10]" > timestamp.tmp
+        cat timestamp.tmp | xargs -i date -d@{} > timestamp.txt
+        rm timestamp.tmp
     - name: Get data portal
       run: |-
         cp Covid19VacunasAgrupadas.csv Covid19VacunasAgrupadas-old.csv
