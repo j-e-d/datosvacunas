@@ -1,2 +1,1 @@
-datos_nomivac_covid19.csv filter=lfs diff=lfs merge=lfs -text
 *.zip !text !filter !merge !diff
