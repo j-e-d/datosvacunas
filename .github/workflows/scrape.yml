@@ -94,6 +94,7 @@ jobs:
         cp Covid19VacunasAgrupadas.csv Covid19VacunasAgrupadas-old.csv
         curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv' > Covid19VacunasAgrupadas.csv
         csv-diff --key=jurisdiccion_nombre Covid19VacunasAgrupadas-old.csv Covid19VacunasAgrupadas.csv > message_2.txt
+        curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv' > datos_nomivac_covid19.csv
     - name: Commit message
       run: |-
         if test -f "message_1.txt"; then
