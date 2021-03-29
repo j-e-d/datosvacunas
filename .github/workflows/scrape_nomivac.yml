@@ -1,0 +1,26 @@
+name: Download datos nomivac
+ 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '42 6,18 * * *'
+ 
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+    - name: Get data nomivac from portal
+      run: |-
+        curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv' > datos_nomivac_covid19.csv
+    - name: Process data
+      run: |-
+        awk -F, '{if (NR!=1) a[$7","$2","$1]++}END{for(i in a) { print i"," "\"" a[i] "\"" }}' datos_nomivac_covid19.csv | sort -k1 > datos_nomivac_covid19_agrupados_edad_sexo.csv
+    - name: Commit & push if changed
+      run: |-
+        git config user.name "Automatic"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        git commit -m "Update nomivac" || exit 0
+        git push
