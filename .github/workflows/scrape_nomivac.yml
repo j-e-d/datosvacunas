@@ -16,7 +16,8 @@ jobs:
         curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv' > datos_nomivac_covid19.csv
     - name: Process data
       run: |-
-        awk -F, '{if (NR!=1) a[$7","$2","$1]++}END{for(i in a) { print i"," "\"" a[i] "\"" }}' datos_nomivac_covid19.csv | sort -k1 > datos_nomivac_covid19_agrupados_edad_sexo.csv
+        head -n 1 datos_nomivac_covid19.csv | awk -F, '{print $7","$2","$1","$14",cantidad"}' > datos_nomivac_covid19_agrupados_edad_sexo_dosis.csv
+        awk -F, '{if (NR!=1) a[$7","$2","$1","$14]++}END{for(i in a) { print i"," "\"" a[i] "\"" }}' datos_nomivac_covid19.csv | sort -k1 >> datos_nomivac_covid19_agrupados_edad_sexo.csv
     - name: Commit & push if changed
       run: |-
         git config user.name "Automatic"
