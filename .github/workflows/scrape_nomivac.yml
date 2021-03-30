@@ -17,14 +17,17 @@ jobs:
         echo $local_last_mod
         local_last_mod_ctime=$(date --date="$last_modified" +%s)
         echo $local_last_mod_ctime
-        current_last_mod=$(curl --silent --head https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv | grep "Last-Modified:" | cut -d ' ' -f1 --complement)
+        curl --silent --head 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv' | grep "Last-Modified:" | cut -d ' ' -f1 --complement > current_last_modified.txt
+        current_last_mod=$(cat current_last_modified.txt)
         echo $current_last_mod
         current_last_mod_ctime=$(date --date="$current_last_mod" +%s)
         echo $current_last_mod_ctime
         if [[ $local_last_mod_ctime -lt $current_last_mod_ctime ]] ; then
           echo "download"
-          #curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv' > datos_nomivac_covid19.csv
-          #curl --silent --head 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv' | grep "Last-Modified:" | cut -d ' ' -f1 --complement > last_modified_nomivac.txt
+          #curl 'https://://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv' | grep "Last-Modified:" | cut -d ' ' -f1 --complement > last_modified_nomivac.txt
+          #mv current_last_modified.txt last_modified_nomivac.txt
+        else
+          rm current_last_modified.txt
         fi
     - name: Agrupado 1
       if: hashFiles('datos_nomivac_covid19.csv') != ''
