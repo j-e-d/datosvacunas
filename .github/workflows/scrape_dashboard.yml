@@ -57,7 +57,7 @@ jobs:
             ]
         }' | jq . > vacunas.json
         jq -r "[.[0].columns[].text], .[0].rows[] | @csv" vacunas.json > vacunas.csv
-        csv-diff --key=Provincia vacunas-old.csv vacunas.csv > message_1.txt
+        csv-diff --key=Provincia vacunas-old.csv vacunas.csv > message.txt
     - name: Get dashboard timestamp
       run: |-
         curl --location --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
@@ -88,31 +88,6 @@ jobs:
         }' | jq -r ".[0].datapoints[][0] | tostring | .[0:10]" > timestamp.tmp
         cat timestamp.tmp | xargs -i date -d@{} > timestamp.txt
         rm timestamp.tmp
-    - name: Get data portal
-      run: |-
-        cp Covid19VacunasAgrupadas.csv Covid19VacunasAgrupadas-old.csv
-        curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv' > Covid19VacunasAgrupadas.csv
-        csv-diff --key=jurisdiccion_nombre Covid19VacunasAgrupadas-old.csv Covid19VacunasAgrupadas.csv > message_2.txt
-    - name: Commit message
-      run: |-
-        if test -f "message_1.txt"; then
-          echo 'Dashboard:' | cat - message_1.txt > temp && mv temp message_1.txt
-          echo "---" >> message_1.txt
-        fi
-        if test -f "message_2.txt"; then
-          echo 'Portal:' | cat - message_2.txt > temp && mv temp message_2.txt
-          echo "---" >> message_2.txt
-          if test -f "message_1.txt"; then
-            cat message_1.txt message_2.txt > message.txt
-            rm message_1.txt message_2.txt
-          else
-            mv message_2.txt message.txt
-          fi
-        else
-          if test -f "message_1.txt"; then
-            mv message_1.txt message.txt
-          fi
-        fi
     - name: Commit & push if changed
       run: |-
         git config user.name "Automatic"

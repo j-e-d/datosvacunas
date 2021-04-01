@@ -1,0 +1,33 @@
+name: Download datos nomivac
+ 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '12 * * * *'
+ 
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+    - name: Get data nomivac from portal
+      run: |-
+        local_last_mod=$(cat last_modified_agrupadas.txt)
+        local_last_mod_ctime=$(date --date="$local_last_mod" +%s)
+        current_last_mod=$(curl --silent --head https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv | grep "Last-Modified:" | cut -d ' ' -f1 --complement)
+        current_last_mod_ctime=$(date --date="$current_last_mod" +%s)
+        if [[ $local_last_mod_ctime -lt $current_last_mod_ctime ]] ; then
+          cp Covid19VacunasAgrupadas.csv Covid19VacunasAgrupadas-old.csv
+          curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv' > Covid19VacunasAgrupadas.csv
+          csv-diff --key=jurisdiccion_nombre Covid19VacunasAgrupadas-old.csv Covid19VacunasAgrupadas.csv > message.txt
+          echo $current_last_mod > last_modified_agrupadas.txt
+        fi
+    - name: Commit & push if changed
+      run: |-
+        rm datos_nomivac_covid19.csv
+        git config user.name "Automatic"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        git commit -F message.txt || exit 0
+        git push
