@@ -1,4 +1,4 @@
-name: Download datos nomivac
+name: Download datos vacunas agrupadas
  
 on:
   workflow_dispatch:
