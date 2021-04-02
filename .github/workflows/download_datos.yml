@@ -39,9 +39,11 @@ jobs:
           echo $current_last_mod > last_modified_agrupadas.txt
         fi
     - name: Commit & push if changed
+      if: hashFiles('message.txt') != ''
       run: |-
         git config user.name "Automatic"
         git config user.email "actions@users.noreply.github.com"
         git add -A
         git commit -F message.txt || exit 0
         git push
+        rm message.txt

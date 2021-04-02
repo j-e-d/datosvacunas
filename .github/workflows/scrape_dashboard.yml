@@ -59,6 +59,7 @@ jobs:
         jq -r "[.[0].columns[].text], .[0].rows[] | @csv" vacunas.json > vacunas.csv
         csv-diff --key=Provincia vacunas-old.csv vacunas.csv > message.txt
     - name: Get dashboard timestamp
+      if: hashFiles('message.txt') != ''
       run: |-
         curl --location --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
         --header 'Connection: keep-alive' \
@@ -89,9 +90,11 @@ jobs:
         cat timestamp.tmp | xargs -i date -d@{} > timestamp.txt
         rm timestamp.tmp
     - name: Commit & push if changed
+      if: hashFiles('message.txt') != ''
       run: |-
         git config user.name "Automatic"
         git config user.email "actions@users.noreply.github.com"
         git add -A
         git commit -F message.txt || exit 0
         git push
+        rm message.txt
