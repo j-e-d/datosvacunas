@@ -39,6 +39,7 @@ jobs:
         echo -n '"count",' > datos_nomivac_covid19_por_fecha_y_dosis.csv
         head -1 datos_nomivac_covid19.csv | cut -d, -f7,11,14 >> datos_nomivac_covid19_por_fecha_y_dosis.csv
         tail -n +2 datos_nomivac_covid19.csv | cut -d, -f7,11,14 | sort | uniq -c | sed 's/^ *//g; s/ /,/' >> datos_nomivac_covid19_por_fecha_y_dosis.csv
+        sed -i -r 's/,orden_dosis/,"orden_dosis"/' datos_nomivac_covid19_por_fecha_y_dosis.csv
     - name: Commit & push if changed
       if: hashFiles('datos_nomivac_covid19.csv') != ''
       run: |-
