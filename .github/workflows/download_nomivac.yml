@@ -15,10 +15,11 @@ jobs:
       run: |-
         local_last_mod=$(cat last_modified_nomivac.txt)
         local_last_mod_ctime=$(date --date="$local_last_mod" +%s)
-        current_last_mod=$(curl --silent --head https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv | grep "Last-Modified:" | cut -d ' ' -f1 --complement)
+        current_last_mod=$(curl --silent --head https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.zip | grep "Last-Modified:" | cut -d ' ' -f1 --complement)
         current_last_mod_ctime=$(date --date="$current_last_mod" +%s)
         if [[ $local_last_mod_ctime -lt $current_last_mod_ctime ]] ; then
-          curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.csv' > datos_nomivac_covid19.csv
+          curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.zip' > datos_nomivac_covid19.zip
+          unzip datos_nomivac_covid19.zip
           echo $current_last_mod > last_modified_nomivac.txt
         fi
     - name: Agrupado 1
