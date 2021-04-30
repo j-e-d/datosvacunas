@@ -33,7 +33,7 @@ jobs:
         current_last_mod=$(curl --silent --head https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv.zip | grep "Last-Modified:" | cut -d ' ' -f1 --complement)
         current_last_mod_ctime=$(date --date="$current_last_mod" +%s)
         if [[ $local_last_mod_ctime -lt $current_last_mod_ctime ]] ; then
-          cp Covid19VacunasAgrupadas.csv Covid19VacunasAgrupadas-old.csv
+          mv Covid19VacunasAgrupadas.csv Covid19VacunasAgrupadas-old.csv
           curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv.zip' > Covid19VacunasAgrupadas.csv.zip
           unzip Covid19VacunasAgrupadas.csv.zip
           csv-diff --key=jurisdiccion_nombre Covid19VacunasAgrupadas-old.csv Covid19VacunasAgrupadas.csv > message.txt
