@@ -36,6 +36,7 @@ jobs:
           mv Covid19VacunasAgrupadas.csv Covid19VacunasAgrupadas-old.csv
           curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv.zip' > Covid19VacunasAgrupadas.csv.zip
           unzip Covid19VacunasAgrupadas.csv.zip
+          rm Covid19VacunasAgrupadas.csv.zip
           csv-diff --key=jurisdiccion_nombre Covid19VacunasAgrupadas-old.csv Covid19VacunasAgrupadas.csv > message.txt
           echo $current_last_mod > last_modified_agrupadas.txt
         fi

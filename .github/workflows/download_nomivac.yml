@@ -20,6 +20,7 @@ jobs:
         if [[ $local_last_mod_ctime -lt $current_last_mod_ctime ]] ; then
           curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.zip' > datos_nomivac_covid19.zip
           unzip datos_nomivac_covid19.zip
+          rm datos_nomivac_covid19.zip
           echo $current_last_mod > last_modified_nomivac.txt
         fi
     - name: Agrupado 1
