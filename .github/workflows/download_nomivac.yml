@@ -3,7 +3,7 @@ name: Download datos nomivac
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '42 * * * *'
+    - cron:  '12,22,32,42,52 * * * *'
  
 jobs:
   scheduled:
