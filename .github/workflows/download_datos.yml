@@ -34,7 +34,7 @@ jobs:
         current_last_mod_ctime=$(date --date="$current_last_mod" +%s)
         if [[ $local_last_mod_ctime -lt $current_last_mod_ctime ]] ; then
           mv Covid19VacunasAgrupadas.csv Covid19VacunasAgrupadas-old.csv
-          curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv.zip' > Covid19VacunasAgrupadas.csv.zip
+          curl --retry 3 --retry-delay 10 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19VacunasAgrupadas.csv.zip' --output Covid19VacunasAgrupadas.csv.zip
           unzip Covid19VacunasAgrupadas.csv.zip
           rm Covid19VacunasAgrupadas.csv.zip
           csv-diff --key=jurisdiccion_nombre Covid19VacunasAgrupadas-old.csv Covid19VacunasAgrupadas.csv > message.txt
@@ -43,7 +43,6 @@ jobs:
     - name: Commit & push if changed
       if: hashFiles('message.txt') != ''
       run: |-
-        git pull
         git config user.name "Automatic"
         git config user.email "actions@users.noreply.github.com"
         git add -A

@@ -29,7 +29,8 @@ jobs:
     - name: Get data dashboard
       run: |-
         cp vacunas.csv vacunas-old.csv
-        curl --location --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
+        curl --retry 3 --retry-delay 10 --location \
+        --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
         --header 'Connection: keep-alive' \
         --header 'Pragma: no-cache' \
         --header 'Cache-Control: no-cache' \
@@ -61,7 +62,8 @@ jobs:
     - name: Get dashboard timestamp
       if: hashFiles('message.txt') != ''
       run: |-
-        curl --location --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
+        curl --retry 3 --retry-delay 10 --location \
+        --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
         --header 'Connection: keep-alive' \
         --header 'sec-ch-ua: "Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"' \
         --header 'accept: application/json, text/plain, */*' \

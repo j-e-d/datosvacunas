@@ -18,7 +18,7 @@ jobs:
         current_last_mod=$(curl --silent --head https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.zip | grep "Last-Modified:" | cut -d ' ' -f1 --complement)
         current_last_mod_ctime=$(date --date="$current_last_mod" +%s)
         if [[ $local_last_mod_ctime -lt $current_last_mod_ctime ]] ; then
-          curl 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.zip' > datos_nomivac_covid19.zip
+          curl --retry 3 --retry-delay 10 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/datos_nomivac_covid19.zip' --output datos_nomivac_covid19.zip
           unzip datos_nomivac_covid19.zip
           rm datos_nomivac_covid19.zip
           echo $current_last_mod > last_modified_nomivac.txt
@@ -46,7 +46,6 @@ jobs:
       if: hashFiles('datos_nomivac_covid19.csv') != ''
       run: |-
         rm datos_nomivac_covid19.csv
-        git pull
         git config user.name "Automatic"
         git config user.email "actions@users.noreply.github.com"
         git add -A
