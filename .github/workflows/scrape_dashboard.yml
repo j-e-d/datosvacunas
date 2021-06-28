@@ -29,15 +29,17 @@ jobs:
     - name: Get data dashboard
       run: |-
         cp vacunas.csv vacunas-old.csv
-        curl --retry 3 --retry-delay 10 --location \
-        --request POST 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
+        curl 'https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/api/datasources/proxy/1/query' \
+        --retry 3 --retry-delay 10 --location \
         --header 'Connection: keep-alive' \
         --header 'Pragma: no-cache' \
         --header 'Cache-Control: no-cache' \
+        --header 'sec-ch-ua: " Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"' \
         --header 'accept: application/json, text/plain, */*' \
         --header 'DNT: 1' \
         --header 'x-grafana-org-id: 1' \
-        --header 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36' \
+        --header 'sec-ch-ua-mobile: ?0' \
+        --header 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36' \
         --header 'content-type: application/json' \
         --header 'Origin: https://coronavirus.msal.gov.ar' \
         --header 'Sec-Fetch-Site: same-origin' \
@@ -45,15 +47,15 @@ jobs:
         --header 'Sec-Fetch-Dest: empty' \
         --header 'Referer: https://coronavirus.msal.gov.ar/vacunas/d/8wdHBOsMk/seguimiento-vacunacion-covid/d/8wdHBOsMk/seguimiento-vacunacion-covid?orgId=1&refresh=15m%3F' \
         --header 'Accept-Language: en-US,en;q=0.9,es;q=0.8,pt;q=0.7,lb;q=0.6' \
-        --header 'Cookie: 4e25aec3c58a3dcb4924d0e3fe7d3d20=7211d28221969ddbc73169f9ee6e50cb' \
+        --header 'Cookie: 73d722d882eb4c053e0af0e892680cb4=ba2bcce18ff1a8088d25d07973539530' \
         --data-raw '{
             "targets": [
                 {
-                    "data": null,
-                    "target": "distribucion_aplicacion_utilidad_provincia_tabla",
-                    "refId": "A",
-                    "hide": false,
-                    "type": "table"
+                    "data":null,
+                    "target":"distribucion_aplicacion_utilidad_provincia_tabla_publico",
+                    "refId":"A",
+                    "hide":false,
+                    "type":"table"
                 }
             ]
         }' | jq . > vacunas.json
