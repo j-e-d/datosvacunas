@@ -32,12 +32,6 @@ jobs:
     - name: Agrupado 2
       if: hashFiles('datos_nomivac_covid19.csv') != ''
       run: |-
-        echo -n '"count",' > datos_nomivac_covid19_sin_fecha_sin_lote.csv
-        head -1 datos_nomivac_covid19.csv | cut -d, -f11,15 --complement >> datos_nomivac_covid19_sin_fecha_sin_lote.csv
-        tail -n +2 datos_nomivac_covid19.csv | cut -d, -f11,15 --complement | sort | uniq -c | sed 's/^ *//g; s/ /,/' >> datos_nomivac_covid19_sin_fecha_sin_lote.csv
-    - name: Agrupado 3
-      if: hashFiles('datos_nomivac_covid19.csv') != ''
-      run: |-
         echo -n '"count",' > datos_nomivac_covid19_por_fecha_y_dosis.csv
         head -1 datos_nomivac_covid19.csv | cut -d, -f7,11,14 >> datos_nomivac_covid19_por_fecha_y_dosis.csv
         tail -n +2 datos_nomivac_covid19.csv | cut -d, -f7,11,14 | sort | uniq -c | sed 's/^ *//g; s/ /,/' >> datos_nomivac_covid19_por_fecha_y_dosis.csv
