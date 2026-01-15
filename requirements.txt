@@ -1,1 +1,1 @@
-csv-diff==1.1
+csv-diff==1.2
